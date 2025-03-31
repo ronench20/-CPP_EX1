@@ -1,26 +1,23 @@
-
 #ifndef CPP_EX1_GRAPH_HPP
 #define CPP_EX1_GRAPH_HPP
 
-struct Node{
+struct Node {
     int vertex;
     int weight;
-    Node* next;
+    Node *next;
 };
 
-class Graph{
+class Graph {
 private:
     int numOfVertices;
-    Node** adjList;
 
 public:
+    Node **adjList;
     Graph(int vertices);
     ~Graph();
-
     void addEdge(int src, int dest, int weight = 1);
     void removeEdge(int src, int dest);
     void printGraph();
 };
-
 
 #endif //CPP_EX1_GRAPH_HPP

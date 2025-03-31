@@ -1,6 +1,8 @@
 #include "Graph.hpp"
 #include <iostream>
 
+using namespace std;
+
 Graph::Graph(int vertices) {
     numOfVertices = vertices;
     adjList = new Node * [vertices];
@@ -13,7 +15,7 @@ Graph::Graph(int vertices) {
 Graph::~Graph(){
     for (int i = 0; i < numOfVertices; ++i) {
         Node* curr = adjList[i];
-        while (curr != nullptr) { //check why does it's not working without
+        while (curr != nullptr) {
             Node *temp = curr;
             curr = curr->next;
             delete temp;
@@ -24,7 +26,7 @@ Graph::~Graph(){
 
 void Graph::addEdge(int src, int dest, int weight) {
     if(src < 0 || src >= numOfVertices || dest < 0 || dest >= numOfVertices){
-        std::cout << "invalid Node\n";
+        cout << "invalid Node\n";
         return;
     }
     Node* newNode = new Node;
@@ -42,7 +44,7 @@ void Graph::addEdge(int src, int dest, int weight) {
 
 void Graph::removeEdge(int src, int dest) {
     if (src < 0 || src >= numOfVertices || dest < 0 || dest >= numOfVertices){
-        std::cout << "invalid Node\n";
+        cout << "invalid Node\n";
         return;
     }
     Node* curr = adjList[src];
@@ -78,12 +80,12 @@ void Graph::removeEdge(int src, int dest) {
 
 void Graph::printGraph() {
     for (int i = 0; i < numOfVertices; ++i) {
-        std::cout << "Node " << i << ":";
+        cout << "Node " << i << ":";
         Node* curr = adjList[i];
         while (curr != nullptr){
-            std::cout << " (" << curr ->vertex << ", weight= " << curr ->weight << ")";
+            cout << " (" << curr ->vertex << ", weight= " << curr ->weight << ")";
             curr = curr ->next;
         }
-        std::cout << std::endl;
+        cout << std::endl;
     }
 }
