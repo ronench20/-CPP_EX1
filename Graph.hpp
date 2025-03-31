@@ -1,6 +1,6 @@
 
-#ifndef CPP_EX1_GRAPH_H
-#define CPP_EX1_GRAPH_H
+#ifndef CPP_EX1_GRAPH_HPP
+#define CPP_EX1_GRAPH_HPP
 
 struct Node{
     int vertex;
@@ -23,4 +23,4 @@ public:
 };
 
 
-#endif //CPP_EX1_GRAPH_H
+#endif //CPP_EX1_GRAPH_HPP
