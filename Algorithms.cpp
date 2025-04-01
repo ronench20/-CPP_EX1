@@ -5,13 +5,15 @@
 
 using namespace std;
 
-//int** Algorithms::queue(int src, int dest, int weight){
-//    Node* newNode = new Node;
-//    newNode ->vertex = dest;
-//    newNode ->weight = weight;
-//    newNode ->next = adjList[src];
-//    adjList[src] = newNode;
-//}
+void Algorithms::enqueue(int *queue, int &rear, int value) {
+    queue[rear++] = value;
+}
+int Algorithms::dequeue(int *queue, int &front) {
+    return queue[front++];
+}
+bool Algorithms::isEmpty(int front, int rear) {
+    return (front == rear);
+}
 
 Graph Algorithms::bfs(Graph &graph,int src){
     bool visited[MAX_VALUE] = {false};
@@ -20,18 +22,19 @@ Graph Algorithms::bfs(Graph &graph,int src){
     int rear = 0;
 
     visited[src] = true;
-    queue[rear++] =src;
-    while (front < rear){
-        int curr = queue[front++];
+    enqueue(queue, rear, src);
+    while (!isEmpty(front,rear)){
+        int curr = dequeue(queue, front);
         cout << curr << " ";
+
         Node* temp = graph.adjList[curr];
         while (temp != nullptr){
-            int next = temp->vertex;
+            int next = temp ->vertex;
             if (!visited[next]){
                 visited[next] = true;
-                queue[rear++] = next;
+                enqueue(queue, rear, next);
             }
-            temp = temp ->next;
+            temp = temp->next;
         }
     }
     cout << endl;

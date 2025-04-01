@@ -5,7 +5,7 @@ using namespace std;
 
 Graph::Graph(int vertices) {
     numOfVertices = vertices;
-    adjList = new Node * [vertices];
+    adjList = new Node* [vertices];
     for (int i = 0; i < vertices; ++i) {
         adjList[i] = nullptr;
     }
@@ -83,9 +83,9 @@ void Graph::printGraph() {
         cout << "Node " << i << ":";
         Node* curr = adjList[i];
         while (curr != nullptr){
-            cout << " (" << curr ->vertex << ", weight= " << curr ->weight << ")";
+            cout << " (" << curr ->vertex << ", weight=" << curr ->weight << ")";
             curr = curr ->next;
         }
-        cout << std::endl;
+        cout << endl;
     }
 }

@@ -6,7 +6,9 @@
 
 class Algorithms {
 private:
-    int** queue(int src, int dest, int weight);
+    void enqueue(int queue[], int &rear, int value);
+    int dequeue(int queue[], int &front);
+    bool isEmpty(int front, int rear);
 
 public:
     Graph bfs(Graph &graph,int src);
