@@ -89,3 +89,7 @@ void Graph::printGraph() {
         cout << endl;
     }
 }
+
+int Graph::getNumOfVertices() const {
+    return numOfVertices;
+}

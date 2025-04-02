@@ -18,6 +18,8 @@ public:
     void addEdge(int src, int dest, int weight = 1);
     void removeEdge(int src, int dest);
     void printGraph();
+
+    int getNumOfVertices() const;
 };
 
 #endif //CPP_EX1_GRAPH_HPP

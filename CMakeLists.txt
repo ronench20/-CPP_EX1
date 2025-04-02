@@ -7,4 +7,7 @@ add_executable(
         CPP_EX1
         main.cpp
         Graph.cpp
+        Algorithms.cpp
+        Queue.cpp
+        Stack.cpp
 )

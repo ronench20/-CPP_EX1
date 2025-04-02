@@ -1,30 +1,32 @@
 #include "Algorithms.hpp"
 #include "Graph.hpp"
 #include <iostream>
-#define MAX_VALUE 2^32
+#include "Queue.hpp"
+#include "Stack.hpp"
+#define MAX_VALUE 1024
 
 using namespace std;
 
-void Algorithms::enqueue(int *queue, int &rear, int value) {
-    queue[rear++] = value;
-}
-int Algorithms::dequeue(int *queue, int &front) {
-    return queue[front++];
-}
-bool Algorithms::isEmpty(int front, int rear) {
-    return (front == rear);
-}
 
-Graph Algorithms::bfs(Graph &graph,int src){
+//void Algorithms::enqueue(int *queue, int &rear, int value) {
+//    queue[rear++] = value;
+//}
+//int Algorithms::dequeue(int *queue, int &front) {
+//    return queue[front++];
+//}
+//bool Algorithms::isEmpty(int front, int rear) {
+//    return (front == rear);
+//}
+
+Graph Algorithms::bfs(const Graph &graph,int src){
+    Graph newGraph(graph.getNumOfVertices());
     bool visited[MAX_VALUE] = {false};
-    int queue[MAX_VALUE];
-    int front = 0;
-    int rear = 0;
+    Queue queue;
 
     visited[src] = true;
-    enqueue(queue, rear, src);
-    while (!isEmpty(front,rear)){
-        int curr = dequeue(queue, front);
+    queue.enqueue(src);
+    while (!queue.isEmpty()){
+        int curr = queue.dequeue();
         cout << curr << " ";
 
         Node* temp = graph.adjList[curr];
@@ -32,44 +34,54 @@ Graph Algorithms::bfs(Graph &graph,int src){
             int next = temp ->vertex;
             if (!visited[next]){
                 visited[next] = true;
-                enqueue(queue, rear, next);
+                newGraph.addEdge(curr, next, 0);
+                queue.enqueue(next);
             }
             temp = temp->next;
         }
     }
     cout << endl;
-    return graph;
+    return newGraph;
 }
 
-Graph Algorithms::dfs(Graph &graph, int src) {
+Graph Algorithms::dfs(const Graph &graph, int src) {
+    Graph newGraph(graph.getNumOfVertices());
     bool visited[MAX_VALUE] = {false};
-    int queue[MAX_VALUE];
-    int front = 0;
-    int rear = 0;
+    Stack stack;
 
-    visited[src] = true;
-    enqueue(queue, rear, src);
-    while (!isEmpty(front, rear)){
-        int curr = dequeue(queue,front);
+    stack.push(src);
+
+    while (!stack.isEmpty()) {
+        int curr = stack.pop();
+
+        if (visited[curr]) continue;
+        visited[curr] = true;
+
         cout << curr << " ";
 
+        Node* temp = graph.adjList[curr];
         int children[MAX_VALUE];
         int childrenCount = 0;
-        Node* temp = graph.adjList[curr];
-        while (temp != nullptr){
-            children[childrenCount++] = temp->vertex;
+
+        while (temp != nullptr) {
+            int neighbor = temp->vertex;
+            if (!visited[neighbor]) {
+                newGraph.addEdge(curr, neighbor, 0);
+                children[childrenCount++] = neighbor;
+            }
             temp = temp->next;
         }
+
         for (int i = childrenCount - 1; i >= 0; i--) {
-            int next = children[i];
-            if (!visited[next]){
-                visited[next] = true;
-                enqueue(queue, rear, next);
-            }
+            stack.push(children[i]);
         }
     }
+
     cout << endl;
-    return graph;
+    return newGraph;
 }
 
-Graph Algorithms::dijkstra(Graph &graph, int src) {}
+
+Graph Algorithms::dijkstra(Graph &graph, int src) {
+
+}
