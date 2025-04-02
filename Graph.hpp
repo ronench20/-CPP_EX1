@@ -14,7 +14,7 @@ private:
 public:
     Node **adjList;
     Graph(int vertices);
-    ~Graph();
+    //~Graph();
     void addEdge(int src, int dest, int weight = 1);
     void removeEdge(int src, int dest);
     void printGraph();

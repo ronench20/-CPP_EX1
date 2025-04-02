@@ -11,18 +11,19 @@ Graph::Graph(int vertices) {
     }
 }
 
-//destructor
-Graph::~Graph(){
-    for (int i = 0; i < numOfVertices; ++i) {
-        Node* curr = adjList[i];
-        while (curr != nullptr) {
-            Node *temp = curr;
-            curr = curr->next;
-            delete temp;
-        }
-    }
-    delete[] adjList;
-}
+
+////destructor
+//Graph::~Graph(){
+//    for (int i = 0; i < numOfVertices; ++i) {
+//        Node* curr = adjList[i];
+//        while (curr != nullptr) {
+//            Node *temp = curr;
+//            curr = curr->next;
+//            delete temp;
+//        }
+//    }
+//    delete[] adjList;
+//}
 
 void Graph::addEdge(int src, int dest, int weight) {
     if(src < 0 || src >= numOfVertices || dest < 0 || dest >= numOfVertices){

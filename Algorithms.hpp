@@ -5,6 +5,8 @@
 
 
 class Algorithms {
+    void relax(int u, int v, int weight, int *dist, int *prev);
+    int findMinVertex(int *dist, bool *visited, int numOfVertices);
 
 public:
     Graph bfs(const Graph &graph,int src);

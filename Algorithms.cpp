@@ -8,16 +8,6 @@
 using namespace std;
 
 
-//void Algorithms::enqueue(int *queue, int &rear, int value) {
-//    queue[rear++] = value;
-//}
-//int Algorithms::dequeue(int *queue, int &front) {
-//    return queue[front++];
-//}
-//bool Algorithms::isEmpty(int front, int rear) {
-//    return (front == rear);
-//}
-
 Graph Algorithms::bfs(const Graph &graph,int src){
     Graph newGraph(graph.getNumOfVertices());
     bool visited[MAX_VALUE] = {false};
@@ -27,6 +17,9 @@ Graph Algorithms::bfs(const Graph &graph,int src){
     queue.enqueue(src);
     while (!queue.isEmpty()){
         int curr = queue.dequeue();
+        if(curr == -1){
+            break;
+        }
         cout << curr << " ";
 
         Node* temp = graph.adjList[curr];
@@ -53,6 +46,9 @@ Graph Algorithms::dfs(const Graph &graph, int src) {
 
     while (!stack.isEmpty()) {
         int curr = stack.pop();
+        if (curr == -1) {
+            break;
+        }
 
         if (visited[curr]) continue;
         visited[curr] = true;
@@ -81,7 +77,60 @@ Graph Algorithms::dfs(const Graph &graph, int src) {
     return newGraph;
 }
 
+void Algorithms::relax(int u, int v, int weight, int *dist, int *prev) {
+    if (dist[u] + weight < dist[v]) {
+        dist[v] = dist[u] + weight;
+        prev[v] = u;
+    }
+}
 
+int Algorithms::findMinVertex(int *dist, bool *visited, int numOfVertices) {
+    int minValue = MAX_VALUE;
+    int minVertex = -1;
+    for (int i = 0; i < numOfVertices; i++) {
+        if (!visited[i] && dist[i] < minValue) {
+            minValue = dist[i];
+            minVertex = i;
+        }
+    }
+    return minVertex;
+}
 Graph Algorithms::dijkstra(Graph &graph, int src) {
-
+    int numOV = graph.getNumOfVertices();
+    Graph newGraph(numOV);
+    int dist[MAX_VALUE];
+    int prev[MAX_VALUE];
+    bool visited[MAX_VALUE] = {false};
+    for (int i = 0; i < numOV; i++) {
+        dist[i] = MAX_VALUE;
+        prev[i] = -1;
+    }
+    dist[src] = 0;
+    for (int i = 0; i < numOV; ++i) {
+        int u = findMinVertex(dist, visited, numOV);
+        if (u == -1) {
+            break;
+        }
+        visited[u] = true;
+        Node* temp = graph.adjList[u];
+        while (temp != nullptr) {
+            int v = temp->vertex;
+            int weight = temp->weight;
+            relax(u, v, weight, dist, prev);
+            temp = temp->next;
+        }
+    }
+    for (int v = 0; v < numOV; ++v) {
+        if (prev[v] != -1) {
+            Node* temp = graph.adjList[prev[v]];
+            while (temp != nullptr) {
+                if (temp->vertex == v) {
+                    newGraph.addEdge(prev[v], v, temp->weight);
+                    break;
+                }
+                temp = temp->next;
+            }
+        }
+    }
+    return newGraph;
 }
