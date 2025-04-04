@@ -13,7 +13,7 @@ class Algorithms {
 public:
     Graph bfs(const Graph &graph,int src);
     Graph dfs(const Graph &graph, int src);
-    Graph dijkstra(Graph &graph, int src);
+    Graph dijkstra(const Graph &graph, int src);
     Graph prim(const Graph &graph);
     Graph kruskal(Graph &graph);
 };

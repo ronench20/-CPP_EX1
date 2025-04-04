@@ -98,7 +98,7 @@ int Algorithms::findMinVertex(int *dist, bool *visited, int numOfVertices) {
     }
     return minVertex;
 }
-Graph Algorithms::dijkstra(Graph &graph, int src) {
+Graph Algorithms::dijkstra(const Graph &graph, int src) {
     int numOV = graph.getNumOfVertices();
     Graph newGraph(numOV);
     int dist[MAX_VALUE];
@@ -138,25 +138,32 @@ Graph Algorithms::dijkstra(Graph &graph, int src) {
     return newGraph;
 }
 
-Graph Algorithms::prim(const Graph &graph) {
+Graph Algorithms::prim(const Graph& graph) {
     int numOV = graph.getNumOfVertices();
     Graph newGraph(numOV);
     int key[MAX_VALUE];
     int pi[MAX_VALUE];
-    bool notTreated[MAX_VALUE] = {false};
-    for (int u = 0; u < numOV; u++) {
-        key[u] = INFINITY;
-        pi[u] = -1;
-        notTreated[u] = true;
+    bool notTreated[MAX_VALUE];
+
+    for (int v = 0; v < numOV; v++) {
+        key[v] = INFINITY;
+        pi[v] = -1;
+        notTreated[v] = true;
     }
     int s = 0;
     key[s] = 0;
     pi[s] = -1;
 
-    while (true){
-        int u = findMinVertex(key, notTreated, numOV);
-        cout << "chosen u: " << u << "\n";
-        if (u == -1) {
+    while (true) {
+        int minKey = INFINITY;
+        int u = -1;
+        for (int i = 0; i < numOV; i++) {
+            if (notTreated[i] && key[i] < minKey) {
+                minKey = key[i];
+                u = i;
+            }
+        }
+        if (u == -1){
             break;
         }
         notTreated[u] = false;
@@ -165,16 +172,17 @@ Graph Algorithms::prim(const Graph &graph) {
             int v = temp->vertex;
             int weight = temp->weight;
             if (notTreated[v] && weight < key[v]) {
-                pi[v] = u;
-                key[v] = weight;
+                pi[v] = u;          // π[v] ← u
+                key[v] = weight;    // key[v] ← w(u,v)
             }
             temp = temp->next;
         }
     }
-    for (int v = 0; v < numOV; ++v) {
+    for (int v = 0; v < numOV; v++) {
         if (pi[v] != -1) {
             newGraph.addEdge(pi[v], v, key[v]);
         }
     }
+
     return newGraph;
 }
