@@ -1,3 +1,5 @@
+//ronen.chereshn@msmail.ariel.ac.il
+
 #ifndef CPP_EX1_STACK_HPP
 #define CPP_EX1_STACK_HPP
 #define MAX_VALUE 1024

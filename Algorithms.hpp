@@ -1,3 +1,5 @@
+//ronen.chereshn@msmail.ariel.ac.il
+
 #ifndef CPP_EX1_ALGORITHMS_HPP
 #define CPP_EX1_ALGORITHMS_HPP
 #include "Graph.hpp"
@@ -12,8 +14,8 @@ public:
     Graph bfs(const Graph &graph,int src);
     Graph dfs(const Graph &graph, int src);
     Graph dijkstra(Graph &graph, int src);
-    Graph prim(Graph &graph, int src);
-    Graph kruskal(Graph &graph, int src);
+    Graph prim(const Graph &graph);
+    Graph kruskal(Graph &graph);
 };
 
 

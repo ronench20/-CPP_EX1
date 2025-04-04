@@ -1,9 +1,12 @@
+//ronen.chereshn@msmail.ariel.ac.il
+
 #include "Algorithms.hpp"
 #include "Graph.hpp"
 #include <iostream>
 #include "Queue.hpp"
 #include "Stack.hpp"
 #define MAX_VALUE 1024
+#define INFINITY 99999999
 
 using namespace std;
 
@@ -85,7 +88,7 @@ void Algorithms::relax(int u, int v, int weight, int *dist, int *prev) {
 }
 
 int Algorithms::findMinVertex(int *dist, bool *visited, int numOfVertices) {
-    int minValue = MAX_VALUE;
+    int minValue = INFINITY;
     int minVertex = -1;
     for (int i = 0; i < numOfVertices; i++) {
         if (!visited[i] && dist[i] < minValue) {
@@ -130,6 +133,47 @@ Graph Algorithms::dijkstra(Graph &graph, int src) {
                 }
                 temp = temp->next;
             }
+        }
+    }
+    return newGraph;
+}
+
+Graph Algorithms::prim(const Graph &graph) {
+    int numOV = graph.getNumOfVertices();
+    Graph newGraph(numOV);
+    int key[MAX_VALUE];
+    int pi[MAX_VALUE];
+    bool notTreated[MAX_VALUE] = {false};
+    for (int u = 0; u < numOV; u++) {
+        key[u] = INFINITY;
+        pi[u] = -1;
+        notTreated[u] = true;
+    }
+    int s = 0;
+    key[s] = 0;
+    pi[s] = -1;
+
+    while (true){
+        int u = findMinVertex(key, notTreated, numOV);
+        cout << "chosen u: " << u << "\n";
+        if (u == -1) {
+            break;
+        }
+        notTreated[u] = false;
+        Node* temp = graph.adjList[u];
+        while (temp != nullptr) {
+            int v = temp->vertex;
+            int weight = temp->weight;
+            if (notTreated[v] && weight < key[v]) {
+                pi[v] = u;
+                key[v] = weight;
+            }
+            temp = temp->next;
+        }
+    }
+    for (int v = 0; v < numOV; ++v) {
+        if (pi[v] != -1) {
+            newGraph.addEdge(pi[v], v, key[v]);
         }
     }
     return newGraph;
