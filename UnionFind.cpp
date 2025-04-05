@@ -1,0 +1,43 @@
+//ronen.chereshn@msmail.ariel.ac.il
+
+#include "UnionFind.hpp"
+
+UnionFind::UnionFind() {
+    for (int i = 0; i < MAX_VALUE; ++i) {
+        parent[i] = i;
+        rank[i] = 0;
+    }
+}
+void UnionFind::makeSet(int numOfVertices) {
+    for (int i = 0; i < numOfVertices; ++i) {
+        parent[i] = i;
+        rank[i] = 0;
+    }
+}
+
+int UnionFind::find(int u) {
+    if (parent[u] != u) {
+        parent[u] = find(parent[u]);
+    }
+    return parent[u];
+}
+
+void UnionFind::unite(int u, int v) {
+    int rootU = find(u);
+    int rootV = find(v);
+
+    if (rootU != rootV) {
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } else if (rank[rootU] > rank[rootV]) {
+            parent[rootV] = rootU;
+        } else {
+            parent[rootV] = rootU;
+            rank[rootU]++;
+        }
+    }
+}
+
+bool UnionFind::isConnected(int u, int v) {
+    return find(u) == find(v);
+}

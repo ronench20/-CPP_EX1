@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Queue.hpp"
 #include "Stack.hpp"
+#include "UnionFind.hpp"
 #define MAX_VALUE 1024
 #define INFINITY 99999999
 
@@ -23,7 +24,7 @@ Graph Algorithms::bfs(const Graph &graph,int src){
         if(curr == -1){
             break;
         }
-        cout << curr << " ";
+        //cout << curr << " ";
 
         Node* temp = graph.adjList[curr];
         while (temp != nullptr){
@@ -36,7 +37,7 @@ Graph Algorithms::bfs(const Graph &graph,int src){
             temp = temp->next;
         }
     }
-    cout << endl;
+    //cout << endl;
     return newGraph;
 }
 
@@ -56,7 +57,7 @@ Graph Algorithms::dfs(const Graph &graph, int src) {
         if (visited[curr]) continue;
         visited[curr] = true;
 
-        cout << curr << " ";
+        //cout << curr << " ";
 
         Node* temp = graph.adjList[curr];
         int children[MAX_VALUE];
@@ -75,8 +76,7 @@ Graph Algorithms::dfs(const Graph &graph, int src) {
             stack.push(children[i]);
         }
     }
-
-    cout << endl;
+    //cout << endl;
     return newGraph;
 }
 
@@ -183,6 +183,59 @@ Graph Algorithms::prim(const Graph& graph) {
             newGraph.addEdge(pi[v], v, key[v]);
         }
     }
-
     return newGraph;
 }
+
+Graph Algorithms::kruskal(const Graph &graph) {
+    int numOV = graph.getNumOfVertices();
+    Graph newGraph(numOV);
+    Node edges[MAX_VALUE];
+    int src[MAX_VALUE];
+    int edgeCount = 0;
+
+    for (int u = 0; u < numOV; ++u) {
+        Node* temp = graph.adjList[u];
+        while (temp != nullptr){
+            int v = temp->vertex;
+            int weight = temp->weight;
+
+            if (u < v) {
+                edges[edgeCount].vertex = v;
+                edges[edgeCount].weight = weight;
+                src[edgeCount] = u;
+                edgeCount++;
+            }
+            temp = temp->next;
+        }
+    }
+    for (int i = 0; i < edgeCount -1; ++i) {
+        int minIndex = i;
+        for (int j = i + 1; j < edgeCount; ++j) {
+            if (edges[j].weight < edges[minIndex].weight) {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) {
+            Node temporary = edges[i];
+            edges[i] = edges[minIndex];
+            edges[minIndex] = temporary;
+
+            int newSrc = src[i];
+            src[i] = src[minIndex];
+            src[minIndex] = newSrc;
+        }
+    }
+    UnionFind unionFind;
+    unionFind.makeSet(numOV);
+    for (int i = 0; i < edgeCount; ++i) {
+        int u = src[i];
+        int v = edges[i].vertex;
+        int weight = edges[i].weight;
+        if (!unionFind.isConnected(u, v)) {
+            unionFind.unite(u, v);
+            newGraph.addEdge(u, v, weight);
+        }
+    }
+    return newGraph;
+}
+

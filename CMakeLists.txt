@@ -10,4 +10,5 @@ add_executable(
         Algorithms.cpp
         Queue.cpp
         Stack.cpp
+        UnionFind.cpp
 )

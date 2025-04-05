@@ -7,6 +7,7 @@
 
 
 class Algorithms {
+private:
     void relax(int u, int v, int weight, int *dist, int *prev);
     int findMinVertex(int *dist, bool *visited, int numOfVertices);
 
@@ -15,7 +16,7 @@ public:
     Graph dfs(const Graph &graph, int src);
     Graph dijkstra(const Graph &graph, int src);
     Graph prim(const Graph &graph);
-    Graph kruskal(Graph &graph);
+    Graph kruskal(const Graph &graph);
 };
 
 
