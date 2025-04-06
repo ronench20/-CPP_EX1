@@ -4,6 +4,7 @@
 #define CPP_EX1_ALGORITHMS_HPP
 #include "Graph.hpp"
 
+using namespace graph;
 
 
 class Algorithms {

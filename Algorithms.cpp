@@ -11,25 +11,29 @@
 
 using namespace std;
 
-
-Graph Algorithms::bfs(const Graph &graph,int src){
+/**
+ * Performs Breadth-First Search (BFS) on the given graph starting from the source vertex.
+ * @param graph The input graph.
+ * @param src The source vertex to start BFS.
+ * @return A new graph representing the BFS traversal.
+ */
+Graph Algorithms::bfs(const Graph &graph, int src) {
     Graph newGraph(graph.getNumOfVertices());
     bool visited[MAX_VALUE] = {false};
     Queue queue;
 
     visited[src] = true;
     queue.enqueue(src);
-    while (!queue.isEmpty()){
+    while (!queue.isEmpty()) {
         int curr = queue.dequeue();
-        if(curr == -1){
+        if (curr == -1) {
             break;
         }
-        //cout << curr << " ";
 
         Node* temp = graph.adjList[curr];
-        while (temp != nullptr){
-            int next = temp ->vertex;
-            if (!visited[next]){
+        while (temp != nullptr) {
+            int next = temp->vertex;
+            if (!visited[next]) {
                 visited[next] = true;
                 newGraph.addEdge(curr, next, 0);
                 queue.enqueue(next);
@@ -37,10 +41,15 @@ Graph Algorithms::bfs(const Graph &graph,int src){
             temp = temp->next;
         }
     }
-    //cout << endl;
     return newGraph;
 }
 
+/**
+ * Performs Depth-First Search (DFS) on the given graph starting from the source vertex.
+ * @param graph The input graph.
+ * @param src The source vertex to start DFS.
+ * @return A new graph representing the DFS traversal.
+ */
 Graph Algorithms::dfs(const Graph &graph, int src) {
     Graph newGraph(graph.getNumOfVertices());
     bool visited[MAX_VALUE] = {false};
@@ -56,8 +65,6 @@ Graph Algorithms::dfs(const Graph &graph, int src) {
 
         if (visited[curr]) continue;
         visited[curr] = true;
-
-        //cout << curr << " ";
 
         Node* temp = graph.adjList[curr];
         int children[MAX_VALUE];
@@ -76,10 +83,17 @@ Graph Algorithms::dfs(const Graph &graph, int src) {
             stack.push(children[i]);
         }
     }
-    //cout << endl;
     return newGraph;
 }
 
+/**
+ * Relaxes the edge between two vertices.
+ * @param u The source vertex.
+ * @param v The destination vertex.
+ * @param weight The weight of the edge.
+ * @param dist The array of distances from the source vertex.
+ * @param prev The array of previous vertices in the shortest path.
+ */
 void Algorithms::relax(int u, int v, int weight, int *dist, int *prev) {
     if (dist[u] + weight < dist[v]) {
         dist[v] = dist[u] + weight;
@@ -87,6 +101,13 @@ void Algorithms::relax(int u, int v, int weight, int *dist, int *prev) {
     }
 }
 
+/**
+ * Finds the vertex with the minimum distance that has not been visited.
+ * @param dist The array of distances from the source vertex.
+ * @param visited The array of visited vertices.
+ * @param numOfVertices The number of vertices in the graph.
+ * @return The vertex with the minimum distance.
+ */
 int Algorithms::findMinVertex(int *dist, bool *visited, int numOfVertices) {
     int minValue = INFINITY;
     int minVertex = -1;
@@ -98,6 +119,13 @@ int Algorithms::findMinVertex(int *dist, bool *visited, int numOfVertices) {
     }
     return minVertex;
 }
+
+/**
+ * Performs Dijkstra's algorithm on the given graph starting from the source vertex.
+ * @param graph The input graph.
+ * @param src The source vertex to start Dijkstra's algorithm.
+ * @return A new graph representing the shortest paths from the source vertex.
+ */
 Graph Algorithms::dijkstra(const Graph &graph, int src) {
     int numOV = graph.getNumOfVertices();
     Graph newGraph(numOV);
@@ -138,6 +166,11 @@ Graph Algorithms::dijkstra(const Graph &graph, int src) {
     return newGraph;
 }
 
+/**
+ * Performs Prim's algorithm to find the Minimum Spanning Tree (MST) of the given graph.
+ * @param graph The input graph.
+ * @return A new graph representing the MST.
+ */
 Graph Algorithms::prim(const Graph& graph) {
     int numOV = graph.getNumOfVertices();
     Graph newGraph(numOV);
@@ -163,7 +196,7 @@ Graph Algorithms::prim(const Graph& graph) {
                 u = i;
             }
         }
-        if (u == -1){
+        if (u == -1) {
             break;
         }
         notTreated[u] = false;
@@ -186,6 +219,11 @@ Graph Algorithms::prim(const Graph& graph) {
     return newGraph;
 }
 
+/**
+ * Performs Kruskal's algorithm to find the Minimum Spanning Tree (MST) of the given graph.
+ * @param graph The input graph.
+ * @return A new graph representing the MST.
+ */
 Graph Algorithms::kruskal(const Graph &graph) {
     int numOV = graph.getNumOfVertices();
     Graph newGraph(numOV);
@@ -195,7 +233,7 @@ Graph Algorithms::kruskal(const Graph &graph) {
 
     for (int u = 0; u < numOV; ++u) {
         Node* temp = graph.adjList[u];
-        while (temp != nullptr){
+        while (temp != nullptr) {
             int v = temp->vertex;
             int weight = temp->weight;
 
@@ -208,7 +246,7 @@ Graph Algorithms::kruskal(const Graph &graph) {
             temp = temp->next;
         }
     }
-    for (int i = 0; i < edgeCount -1; ++i) {
+    for (int i = 0; i < edgeCount - 1; ++i) {
         int minIndex = i;
         for (int j = i + 1; j < edgeCount; ++j) {
             if (edges[j].weight < edges[minIndex].weight) {
@@ -238,4 +276,3 @@ Graph Algorithms::kruskal(const Graph &graph) {
     }
     return newGraph;
 }
-

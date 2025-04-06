@@ -3,8 +3,13 @@
 #include "Graph.hpp"
 #include <iostream>
 
-using namespace std;
+using namespace graph;
 
+/**
+ * Constructs a Graph object with a specified number of vertices.
+ *
+ * @param vertices The number of vertices in the graph.
+ */
 Graph::Graph(int vertices) {
     numOfVertices = vertices;
     adjList = new Node* [vertices];
@@ -13,24 +18,35 @@ Graph::Graph(int vertices) {
     }
 }
 
+/**
+ *Destructor for the Graph class.
+ *
+ * Deallocates memory used for the adjacency list.
+ */
+Graph::~Graph(){
+    for (int i = 0; i < numOfVertices; ++i) {
+        Node* curr = adjList[i];
+        while (curr != nullptr) {
+            Node *temp = curr;
+            curr = curr->next;
+            delete temp;
+        }
+    }
+    delete[] adjList;
+}
 
-////destructor
-//Graph::~Graph(){
-//    for (int i = 0; i < numOfVertices; ++i) {
-//        Node* curr = adjList[i];
-//        while (curr != nullptr) {
-//            Node *temp = curr;
-//            curr = curr->next;
-//            delete temp;
-//        }
-//    }
-//    delete[] adjList;
-//}
-
+/**
+ * Adds an edge to the graph.
+ *
+ * @param src The source vertex.
+ * @param dest The destination vertex.
+ * @param weight The weight of the edge.
+ * @throws std::invalid_argument if the source or destination vertex is invalid.
+ */
 void Graph::addEdge(int src, int dest, int weight) {
     if(src < 0 || src >= numOfVertices || dest < 0 || dest >= numOfVertices){
-        cout << "invalid Node\n";
-        return;
+        std::cout << "invalid Node\n";
+        throw std::invalid_argument("invalid Node");
     }
     Node* newNode = new Node;
     newNode ->vertex = dest;
@@ -45,10 +61,17 @@ void Graph::addEdge(int src, int dest, int weight) {
     adjList[dest] = newNodeS;
 }
 
+/**
+ * Removes an edge from the graph.
+ *
+ * @param src The source vertex.
+ * @param dest The destination vertex.
+ * @throws std::invalid_argument if the source or destination vertex is invalid.
+ */
 void Graph::removeEdge(int src, int dest) {
     if (src < 0 || src >= numOfVertices || dest < 0 || dest >= numOfVertices){
-        cout << "invalid Node\n";
-        return;
+        std::cout << "invalid Node\n";
+        throw std::invalid_argument("invalid Node");
     }
     Node* curr = adjList[src];
     Node* prev = nullptr;
@@ -81,18 +104,24 @@ void Graph::removeEdge(int src, int dest) {
     }
 }
 
+/**
+ * Displays each vertex and its adjacent vertices with edge weights.
+ */
 void Graph::printGraph() {
     for (int i = 0; i < numOfVertices; ++i) {
-        cout << "Node " << i << ":";
+        std::cout << "Node " << i << ":";
         Node* curr = adjList[i];
         while (curr != nullptr){
-            cout << " (" << curr ->vertex << ", weight=" << curr ->weight << ")";
+            std::cout << " (" << curr ->vertex << ", weight=" << curr ->weight << ")";
             curr = curr ->next;
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
+/**
+ * @return The number of vertices.
+ */
 int Graph::getNumOfVertices() const {
     return numOfVertices;
 }
