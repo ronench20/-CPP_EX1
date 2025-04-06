@@ -5,7 +5,7 @@
 
 namespace graph{
     /**
-     *Structure to represent a node in the adjacency list.
+     * Structure to represent a node in the adjacency list.
      */
     struct Node {
         int vertex; ///< The vertex number.
@@ -24,7 +24,7 @@ namespace graph{
         Node **adjList; ///< Pointer to an array of adjacency lists.
 
         /**
-         *Constructs a Graph object with a specified number of vertices.
+         * Constructs a Graph object with a specified number of vertices.
          *
          * @param vertices The number of vertices in the graph.
          */
@@ -48,7 +48,7 @@ namespace graph{
         void addEdge(int src, int dest, int weight = 1);
 
         /**
-         *Removes an edge from the graph.
+         * Removes an edge from the graph.
          *
          * @param src The source vertex.
          * @param dest The destination vertex.
