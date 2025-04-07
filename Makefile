@@ -7,9 +7,11 @@ main: main.o Algorithms.o Graph.o Queue.o Stack.o UnionFind.o
 	g++ $(FLAGS) -o main main.o Algorithms.o Graph.o Queue.o Stack.o UnionFind.o
 
 Main: main
+	./main
 
 test: Test.o Algorithms.o Graph.o Queue.o Stack.o UnionFind.o
 	g++ $(FLAGS) -o test Test.o Algorithms.o Graph.o Queue.o Stack.o UnionFind.o
+	./test
 
 Algorithms.o: Algorithms.cpp $(HEADERS)
 	g++ $(FLAGS) -c Algorithms.cpp
