@@ -19,7 +19,7 @@ Graph::Graph(int vertices) {
 }
 
 /**
- *Destructor for the Graph class.
+ * Destructor for the Graph class.
  *
  * Deallocates memory used for the adjacency list.
  */

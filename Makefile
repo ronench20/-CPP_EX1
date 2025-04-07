@@ -34,6 +34,9 @@ UnionFind.o: UnionFind.cpp $(HEADERS)
 valgrind: main
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./main
 
+valgrind-test: test
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./test
+
 clean:
 	rm -f *.o main test
 

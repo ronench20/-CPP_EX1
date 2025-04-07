@@ -9,8 +9,8 @@
  */
 class Stack {
 private:
-    int data[MAX_VALUE]; ///< Array to store stack elements.
-    int top; ///< Index of the top element.
+    int data[MAX_VALUE];
+    int top;
 
 public:
     /**

@@ -1,16 +1,9 @@
 //ronen.chereshn@msmail.ariel.ac.il
+
 #include <iostream>
 #include "Graph.hpp"
 #include "Algorithms.hpp"
 
-/**
- * @brief Main function to demonstrate graph algorithms.
- *
- * This function creates a graph, adds edges, and demonstrates various graph algorithms
- * such as BFS, DFS, Dijkstra's algorithm, Prim's algorithm, and Kruskal's algorithm.
- *
- * @return int Exit status of the program.
- */
 int main() {
     Algorithms alg;
     Graph graph(5);

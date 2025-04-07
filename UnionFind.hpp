@@ -9,8 +9,8 @@
  */
 class UnionFind {
 private:
-    int parent[MAX_VALUE]; ///< Array to store the parent of each element.
-    int rank[MAX_VALUE]; ///< Array to store the rank (approximate tree height) of each element.
+    int parent[MAX_VALUE];
+    int rank[MAX_VALUE];
 
 public:
     /**
@@ -26,7 +26,7 @@ public:
     void makeSet(int numOfVertices);
 
     /**
-     * Finds the representative (root) of the set containing element u.
+     * Finds the root of the set containing element u.
      *
      * @param u The element to find the set representative for.
      * @return The representative of the set containing u.

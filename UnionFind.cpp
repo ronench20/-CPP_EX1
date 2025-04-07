@@ -25,7 +25,7 @@ void UnionFind::makeSet(int numOfVertices) {
 }
 
 /**
- * Finds the representative (root) of the set containing element u.
+ * Finds the root of the set containing element u.
  *
  * @param u The element to find the set representative for.
  * @return The representative of the set containing u.
